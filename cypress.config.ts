@@ -8,9 +8,9 @@ export default defineConfig({
     viewportHeight: 1080,
     defaultCommandTimeout: 3000,
     retries: { runMode: 1, openMode: 1 },
+    scrollBehavior: 'center',
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
   },
 });
-import {defineConfig} from 'cypress';
