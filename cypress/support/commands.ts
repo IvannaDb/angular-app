@@ -25,13 +25,18 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 //
-// declare global {
-//   namespace Cypress {
-//     interface Chainable {
-//       login(email: string, password: string): Chainable<void>
-//       drag(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       dismiss(subject: string, options?: Partial<TypeOptions>): Chainable<Element>
-//       visit(originalFn: CommandOriginalFn, url: string, options: Partial<VisitOptions>): Chainable<Element>
-//     }
-//   }
-// }
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      login(data: {email: string, password: string, rememberMe: boolean}): Chainable<void>
+      
+    }
+  }
+}
+Cypress.Commands.add('login', ({email, password, rememberMe=false}: {email: string, password: string, rememberMe: boolean}) =>{
+    cy.visit('/auth/login')
+    cy.get('#input-email').type(email)
+    cy.get('#input-password').type(password)
+    if (rememberMe) cy.get('.custom-checkbox').click()
+    cy.get("button[ng-reflect-status='primary']").click()
+})
