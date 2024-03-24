@@ -34,6 +34,7 @@ declare global {
   }
 }
 Cypress.Commands.add('login', ({email, password, rememberMe=false}: {email: string, password: string, rememberMe: boolean}) =>{
+    cy.visit('/auth/login')
     cy.get('#input-email').type(email)
     cy.get('#input-password').type(password)
     if (rememberMe) cy.get('.custom-checkbox').click()

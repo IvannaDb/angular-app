@@ -14,14 +14,17 @@ export default class SmartTable {
         this.emailInput.type(email)
         this.ageInput.type(age)
     }
+
     fillForEdit ({id, firstName, lastName, userName, email, age}){
-        this.idInputEdit.type(id)
-        this.firstNameInputEdit.type(firstName)
-        this.lastNameInputEdit.type(lastName)
-        this.userNameInputEdit.type(userName)
-        this.emailInputEdit.type(email)
-        this.ageInputEdit.type(age)
+        this.idInputEdit.clear().type(id)
+        this.firstNameInputEdit.clear().type(firstName)
+        this.lastNameInputEdit.clear().type(lastName)
+        this.userNameInputEdit.clear().type(userName)
+        this.emailInputEdit.clear().type(email)
+        this.ageInputEdit.clear().type(age)
     }
+
+
     get idInput (){
       return  cy.get(`${this._formSelector} td:nth-child(2) input-editor`)
     }
@@ -43,9 +46,6 @@ export default class SmartTable {
     get submitButton (){
         return cy.get(`${this._formSelector} td:nth-child(1) a.ng2-smart-action-add-create`)
     }
-    get cancelButton (){
-        return cy.get(`${this._formSelector} td:nth-child(1) a.ng2-smart-action-add-cancel`)
-    }
     get idCell (){
         return cy.get(`${this._tableItemSelector} >td:nth-child(2) div.ng-star-inserted`)
     }
@@ -64,6 +64,18 @@ export default class SmartTable {
     get ageCell (){
         return cy.get(`${this._tableItemSelector} >td:nth-child(7) div.ng-star-inserted`)
     }
+    checkCellValues(itemData) {
+        const cellSelectors = ['id', 'firstName', 'lastName', 'userName', 'email', 'age']
+
+        cellSelectors.forEach((selector, index) => {
+            const nthChild = index + 2;
+            cy.get(`${this._tableItemSelector} > td:nth-child(${nthChild}) div.ng-star-inserted`)
+                .should('be.visible')
+                .invoke('text')
+                .should('eq', itemData[selector]);
+        });
+    }
+
     get editButton (){
         return cy.get(`${this._tableItemSelector} >td:nth-child(1) a.ng2-smart-action-edit-edit`)
     }

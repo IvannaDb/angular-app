@@ -1,7 +1,5 @@
+/// <reference types = "cypress" />
 describe ('Login', ()=>{
-    before (()=> {
-        cy.visit('/auth/login')
-    })
     it ('Check login with valid data', ()=>{
         const userData ={
             email: 'test@example.com',
@@ -9,7 +7,6 @@ describe ('Login', ()=>{
             rememberMe: true
         }
         cy.login (userData)
-        cy.wait(4000)
-        cy.url().should('include', '/pages/dashboard')
+        cy.url({ timeout: 4000 }).should('include', '/pages/dashboard')
     })
 })

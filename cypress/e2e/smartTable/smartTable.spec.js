@@ -1,3 +1,4 @@
+/// <reference types = "cypress" />
 import SmartTable from "../../pageObjects/SmartTable.js"
 
 describe ('Check creating new item', ()=>{
@@ -24,53 +25,29 @@ describe ('Check creating new item', ()=>{
         }
 
  //Creating new item
- 
-    smartTable.idInput.should('be.visible')
-    smartTable.firstNameInput.should('be.visible')
-    smartTable.lastNameInput.should('be.visible')
-    smartTable.userNameInput.should('be.visible')
-    smartTable.emailInput.should('be.visible')
-    smartTable.ageInput.should('be.visible')
 
     smartTable.fillForCreate(itemData)   
 
-    smartTable.firstNameInput.invoke('val').should('eq', itemData.firstName)
-    smartTable.lastNameInput.invoke('val').should('eq', itemData.lastName)
-    smartTable.userNameInput.invoke('val').should('eq', itemData.userName)
-    smartTable.emailInput.invoke('val').should('eq', itemData.email)
-    smartTable.ageInput.invoke('val').should('eq', itemData.age)
+    smartTable.firstNameInput.should('be.visible').invoke('val').should('eq', itemData.firstName)
+    smartTable.lastNameInput.should('be.visible').invoke('val').should('eq', itemData.lastName)
+    smartTable.userNameInput.should('be.visible').invoke('val').should('eq', itemData.userName)
+    smartTable.emailInput.should('be.visible').invoke('val').should('eq', itemData.email)
+    smartTable.ageInput.should('be.visible').invoke('val').should('eq', String(itemData.age))
 
-    smartTable.cancelButton.should('be.visible')
     smartTable.submitButton .should('be.visible').click()
 
 // Checking data in the table after creating new item
-    smartTable.idCell.should('be.visible')
-    smartTable.idCell.invoke('text').should('eq', itemData.id)
-
-    smartTable.firstNameCell.should('be.visible')
-    smartTable.firstNameCell.invoke('text').should('eq', itemData.firstName)
-
-    smartTable.lastNameCell.should('be.visible')
-    smartTable.lastNameCell.invoke('text').should('eq', itemData.lastName)
-
-    smartTable.userNameCell.should('be.visible')
-    smartTable.userNameCell.invoke('text').should('eq', itemData.userName)
-
-    smartTable.emailCell.should('be.visible')
-    smartTable.emailCell.invoke('text').should('eq', itemData.email)
-
-    smartTable.ageCell.should('be.visible')
-    smartTable.ageCell.invoke('text').should('eq', itemData.age)
+    smartTable.checkCellValues(itemData);
 
 // Edit selected item
     smartTable.editButton.should('be.visible').click()
 
-    smartTable.idInputEdit.should('be.visible').clear()
-    smartTable.firstNameInputEdit.should('be.visible').clear()
-    smartTable.lastNameInputEdit.should('be.visible').clear()
-    smartTable.userNameInputEdit.should('be.visible').clear()
-    smartTable.emailInputEdit.should('be.visible').clear()
-    smartTable.ageInputEdit.should('be.visible').clear()
+    smartTable.idInputEdit.should('be.visible')
+    smartTable.firstNameInputEdit.should('be.visible')
+    smartTable.lastNameInputEdit.should('be.visible')
+    smartTable.userNameInputEdit.should('be.visible')
+    smartTable.emailInputEdit.should('be.visible')
+    smartTable.ageInputEdit.should('be.visible')
 
     smartTable.fillForEdit(editItemData)  
 
@@ -84,22 +61,5 @@ describe ('Check creating new item', ()=>{
     smartTable.submitEditButton .should('be.visible').click()
 
 // Check data in the table after editing 
-    smartTable.idCell.should('be.visible')
-    smartTable.idCell.invoke('text').should('eq', editItemData.id)
-
-    smartTable.firstNameCell.should('be.visible')
-    smartTable.firstNameCell.invoke('text').should('eq', editItemData.firstName)
-
-    smartTable.lastNameCell.should('be.visible')
-    smartTable.lastNameCell.invoke('text').should('eq', editItemData.lastName)
-
-    smartTable.userNameCell.should('be.visible')
-    smartTable.userNameCell.invoke('text').should('eq', editItemData.userName)
-
-    smartTable.emailCell.should('be.visible')
-    smartTable.emailCell.invoke('text').should('eq', editItemData.email)
-
-    smartTable.ageCell.should('be.visible')
-    smartTable.ageCell.invoke('text').should('eq', editItemData.age)
-    })
-    })
+smartTable.checkCellValues(editItemData)
+    }) })
